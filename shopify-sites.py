@@ -166,10 +166,10 @@ def update_shopify_db(keywords, site, proxy_list):
             except:
                 log('e', "Connection to URL <" + link + "> failed.")
                 continue
-    
+
         xml = soup(r.text, "xml")
         products_raw = xml.findAll('entry')
-    
+
         # Get products with the specified keywords
         for product in products_raw:
             product_found = False
@@ -179,11 +179,11 @@ def update_shopify_db(keywords, site, proxy_list):
                     title = product.find("title").text
                     link = product.find("link")["href"]
                     tags_raw = product.findAll("s:tag")
-    
+
                     tags = []
                     for tag in tags_raw:
                         tags.append(tag.text.upper())
-    
+
                     # Check if the keywords are in the product's name or tags
                     if(keyword.upper() in title.upper() or keyword.upper() in tags):
                         # Get the variants from the product
@@ -199,29 +199,29 @@ def update_shopify_db(keywords, site, proxy_list):
                                 working = True
                             except:
                                 working = False
-    
+
                         # If the site/proxy is working
-                        if(working):
+                        if(working): 'https://discordapp.com/api/webhooks/609541516377194508/nJqkl98mdg9SvlF0pIZmJ-YY8EePCwQdfLJ-4oB4WJj3WR6Ve0LpzFZGHcOLrvDyxrAT'
                             # Break down the product page
                             xml = soup(r.text, "xml")
-    
+
                             # Get the variants for the product
                             variants = []
                             raw_variants = xml.findAll("variant")
                             for raw_variant in raw_variants:
                                 variants.append((raw_variant.find("title").text, raw_variant.find("id").text))
-    
+
                             # Get the product's image if it's available
                             try:
                                 image = xml.find("image").find("src").text
                             except:
                                 image = None
-    
+
                             # Store the product in the database
                             product_info = (title, link, variants, image, title, site)
                             alert = add_to_shopify_db(product_info)
                             product_found = True
-    
+
                             # Send a Discord alert if the product is new
                             if(alert):
                                 send_embed("NEW_SHOPIFY", link, variants, site, image, title)
@@ -316,4 +316,3 @@ if(__name__ == "__main__"):
         t = Thread(target=update_shopify_db, args=(keywords, site, proxies))
         t.start()
         time.sleep(1)
-
