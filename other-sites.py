@@ -53,7 +53,7 @@ class Product():
         (str, str, bool, str) -> None
         Creates an instance of the Product class.
         '''
-    
+
         # Setup product attributes
         self.title = title
         self.stock = stock
@@ -118,7 +118,7 @@ def add_to_db(product):
     # Add product to database if it's unique
     try:
         c.execute("""INSERT INTO products (title, link, stock, keywords) VALUES (?, ?, ?, ?)""", (title, link, stock, keyword))
-        log('s', "Found new product with keyword " + keyword + ". Link = " + link)        
+        log('s', "Found new product with keyword " + keyword + ". Link = " + link)
         alert = True
     except:
         # Product already exists
@@ -140,7 +140,7 @@ def send_embed(product):
     Sends a discord alert based on info provided.
     '''
 
-    url = 'INSERT YOUR WEBHOOK HERE'
+    url = 'https://discordapp.com/api/webhooks/609541516377194508/nJqkl98mdg9SvlF0pIZmJ-YY8EePCwQdfLJ-4oB4WJj3WR6Ve0LpzFZGHcOLrvDyxrAT'
 
     embed = Webhook(url, color=123123)
 
@@ -243,8 +243,16 @@ if(__name__ == "__main__"):
         "ovo-jordan",
         "air-jordan-1",
         "wotherspoon"
+        "jordan-IV",
+        "jordan-4",
+        "terra-kiger",
+        "MCA",
+        "travis-scott",
+        "kaws",
+        "tom-sachs",
+        "sacai",
     ]
-    
+
     # Load sites from file
     sites = read_from_txt("other-sites.txt")
 
